@@ -1,0 +1,19 @@
+---
+---
+@import "minima";
+// @import "{{ site.theme }}";
+
+.small {
+  font-size: 0.85em;
+  color: #666;
+  line-height: 1.6;
+}
+
+.pi p {
+  text-indent: 2em;
+  margin-bottom: 0.2em;
+}
+
+.ps p {
+  margin-bottom: 0.5em;
+}
