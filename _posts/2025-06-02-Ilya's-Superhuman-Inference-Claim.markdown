@@ -7,9 +7,10 @@ categories: AI Leaders
 
 A couple years ago, in an informal interview with Dwarkesh Patel, Ilya [made a claim](https://youtu.be/Yf1o0TQzry8?t=394) about next-token prediction being able to surpass human-level performance.  I'd summarize it as "next-token prediction models which achieve a great level of accuracy must understand the underlying properties of what generated its dataset rather than just the relations of it, and can as such perform out-of-sample (superhuman) performance".  It really struck me - I thought it was an eloquent way to put it, and it was the first time I'd ever heard a leading scientist say that the <b>current</b> architecture could surpass human performance in a meaningful way.
 
-But today I found [him saying this exact idea](https://youtu.be/T0I88NhR_9M?t=517) back in 2019.  The major difference being his claim was only "understanding" in 2019 while in 2023 it's "surpassing".  I'm curious to consider what exactly he learned over these four years to cause this jump in belief.[^1]  I'm also happy to just be highlighting these statements regardless of an analysis.
+But today I found [him saying this exact idea](https://youtu.be/T0I88NhR_9M?t=517) back in 2019.  The major difference being his claim was only "understanding" in 2019 while in 2023 it's "surpassing".  In 2019, the leading models XLNet and BERT were only useful when finetuned[^8], and the community treated superhuman language understanding as sci-fi.  I'm curious to consider what exactly he learned over these four years to cause this jump in belief.[^1]  I'm also happy to just be highlighting these statements regardless of an analysis.
 
 # Ilya's statement in 2019 ([link](https://youtu.be/T0I88NhR_9M?t=517))
+---
 <div class="small"><div class="ps">
   <p>(Ilya) So here's what I want to convince you: that if you have a model, which is really big and powerful, and you ask of it to predict the next word <strong>sufficiently well</strong>, and it succeeds, then it means that it understands the text. So here's the statement I'm going to make: predicting the next word in text sufficiently well will lead to understanding of the text. And as a by-product, if you can predict the next word sufficiently well, you can also generate text—because you just make a prediction and feed it back to yourself.</p>
   <p>But let’s analyze this argument. Why should it be that predicting the next word sufficiently well will lead to understanding of the text—actual understanding, true understanding? Well, let’s work out some examples. Let’s say you are reading a legal document. And it has a lot of text in it, a lot of stuff. But you can predict the next word—like, ultimately, the only way to do it well enough is because you understand what it’s talking about.</p>
@@ -20,15 +21,16 @@ But today I found [him saying this exact idea](https://youtu.be/T0I88NhR_9M?t=51
 
 ---
 
-In that talk there was never an exact finish to the claim; he completely stumbles at the end and leaves the formal grounding entirely unmentioned.  GPT-2 had been released just a month earlier (Feb 2019), demonstrating that Attention was sufficiently expressive to where scaling it led to emergent behavior like summarization and translation without task-specific finetuning[^2] (note GPT-1 also had Attention but was only twice the size of my last personal NLP project, 117M).  But still, the theoretical basis for why prediction by itself was yielding understanding was nonexistent.
+In that talk there was never an exact finish to the claim; he completely stumbles at the end and leaves the formal grounding unmentioned.  GPT-2 had been released just a month earlier (Feb 2019), demonstrating that Attention was sufficiently expressive to where scaling it led to emergent behavior like summarization and translation without task-specific finetuning[^2] (note GPT-1 also had Attention but was only twice the size of my last personal NLP project at 117M).  But still, the theoretical basis for why prediction by itself was yielding understanding was nonexistent.
 
-Because he only cites intuitive but not rigorous examples, we have to explicitly reconstruct his implicit premises - I see two.  The first is that <em>text is mostly self-contained.</em>  Predicting tokens accurately demands learning the semantic and logical structure of the text.  The next is that <em>making use of the data is making use of the world.</em>  More things are related than we think[^3] and here Ilya is now seeing this in the training data.
+His arguments are only intuitive and not rigorous, and I think two premises stand out.  The first is that <em>text is mostly self-contained.</em>  Predicting tokens accurately demands learning the semantic and logical structure of the text.  The next is that <em>making use of the data is making use of the world.</em>  More things are related than we think[^3] and here Ilya is now seeing this in the training data.
 
-Though these are powerful intuitively, they weren't without criticism - expected considering how much exists even today with O3 and 4.5.  It was already evident that models engaged/were entirely memorization, but the introduction of Attention deepened the conviction by allowing it directly into the realm of lexical memorization[^4].  GPT-2 still failed at arithmetic and Winograd schema challenges (it achieved SOTA, but only 67% accuracy, which just can't be considered a win whatsoever, especially considering baseline for this task is 50%).
+These ideas are powerful intuitively, but much harder to ground.  Online criticism came, as it still does even with O3 and 4.5 today.  It already seemed[^7] that models could strongly rely on memorization, and the introduction of Attention more explicitely demarcated the lexical memorization regime[^4] because the models could more easily follow "if-then" heuristics.  But GPT-2 had demonstrably failed at arithmetic and Winograd schema challenges (it achieved SOTA, but only 67% accuracy, which just can't be considered a win whatsoever, especially considering baseline for this benchmark is 50%).
 
-Even though this talk was in 2019, Ilya would've known the original [2020 scaling laws](https://arxiv.org/pdf/2001.08361) well.
+Enter [scaling laws](https://arxiv.org/pdf/2001.08361).  Even though this talk was in 2019, before the release of the famous 2020 scaling laws paper, Ilya would have had substantial—or better—insight into those results.  This was the theoretical clarity that Ilya had when making these claims.  The Open AI team works concurrently on sequential generations of ChatGPT (GPT-3 was released only a year later), so the design was likely already shaped by the insights from scaling laws research and GPT-2 results.
 
 # Ilya's statement in 2023 ([link](https://youtu.be/Yf1o0TQzry8?t=394))
+---
 <div class="small"><div class="ps">
   <p>(Dwarkesh) So you could argue that next-token prediction can only help us match human performance, and maybe not surpass it. What would it take to surpass human performance?</p>
   <p>(Ilya) I challenge the claim that next-token prediction cannot surpass human performance. It looks like on the surface it cannot. It looks on the surface if you just learn to imitate, to predict what people do—it means that you can only copy people.</p>
@@ -41,9 +43,7 @@ Even though this talk was in 2019, Ilya would've known the original [2020 scalin
 
 ---
 
-By 2023, the landscape had shifted dramatically.  GPT-3 and GPT-4 continued along their scaling power-law trajectories, hitting benchmarks shown below.  Concurrently, a modern report on scaling laws, Physics of Language Models[^5], covers that information "memorized" by the model is fully extractable, though not manipulable in all ways.  This switched us from statistical memorization to semantic generalization.  The benchmarks show clearly what Ilya claimed in 2019, where he said many times in the presentation about how important scaling was, and that more needed to be done.
-
-But do the results, specifically the Physics of Language Models results, show that next-token prediction inherently involves deeper world understanding?  They definitely show that the information models learn is beyond memorization - even if restrictions show it's not 100% generalized, it doesn't meet the 
+By 2023, the landscape had shifted dramatically.  GPT-3 and GPT-4 continued along their scaling power-law trajectories, hitting benchmarks shown below.  Concurrently, a modern report on scaling laws, Physics of Language Models[^5], covers that information "memorized" by the model is fully extractable and manipulable, though not in all ways.  This switched us from statistical memorization to semantic generalization.  ChatGPT's benchmarks show clearly what Ilya claimed in 2019, where he said many times in the presentation about how important scaling was, and that more needed to be done.
 
 <table>
   <thead>
@@ -88,11 +88,15 @@ But do the results, specifically the Physics of Language Models results, show th
   </tbody>
 </table>
 
-There's only one tenet I think is important for this: people are modeled by the data they put on the internet.  I mention again my footnote on emergent misalignment[^3].  Ilya says in [An Observation on Generalization](https://youtu.be/AKMuA_TVz3A?t=937) that a good compressor, using datasets X and Y, will use patterns that exist in X to compress Y.  It's useful to write this formally too, that if there exists an F such that $\mathcal{D}(F(X)) \approx \mathcal{D}(Y)$, then a good compressor will notice and exploit this[^6].  I think this is the core of what he's claiming with "Such a person doesn't exist, ... you should still be able to guess what this hypothetical person will do".  The data generated on the internet by person X helps model the data generated by person Y.  Their information can convene and collaborate in the forward pass, just like if we would just lock Chollet and Schulman in a room for 10 years AI would come out.
+But do the results, specifically the Physics of Language Models results, show that next-token prediction inherently involves deeper world understanding?  They definitely show that the information models learn is beyond memorization - even if restrictions show it's not 100% generalized, it doesn't steep to the common definition of memorization.
+
+People are modeled by the data they put on the internet.  I mention again my footnote on emergent misalignment[^3].  Ilya says in [An Observation on Generalization](https://youtu.be/AKMuA_TVz3A?t=937) if there exists an $\mathcal{F}$ such that distribution $\mathcal{D}(F(X))$ $\approx$ $\mathcal{D}(Y)$, then a good compressor will notice and exploit this[^6].  The compressor uses patterns that exist in X to compress Y.  I think this is the core of what he's claiming with "Such a person doesn't exist, ... you should still be able to guess what this hypothetical person will do".  The data generated on the internet by person X helps model the data generated by person Y.  Their data can convene and collaborate in the forward pass, just like if we would just lock Chollet and Schulman in a room for 10 years AI would come out.
+
+Whether or not you accept Ilya's escalated claim, the empirical trend is there.  The only open question is how many nines of [perplexity](https://huggingface.co/docs/transformers/en/perplexity) are left for transformers?
 
 ---
 
-[^1]: Scrambling as an ML practitioner while the AI czars iterate on the SOTA methods feels overwhelming sometimes, at least for me, but maybe we can make a game out of it.  You can certainly read papers that come out, and try to get a list going of who the people to pay attention to are, but curated and reliable sources are rare.  [This course](https://stanford-cs336.github.io/spring2025/) seems to be the most modern and complete source as of writing this.
+[^1]: Scrambling as an ML practitioner while the AI czars iterate on the SOTA methods feels overwhelming sometimes.  You can certainly read papers that come out, and try to get a list going of who the people to pay attention to are, but curated and reliable sources are rare.  [This course](https://stanford-cs336.github.io/spring2025/) seems to be the most modern and complete source as of writing this.
 
 [^2]: In the technical report for the full model release in November 2019, [Language Models are Unsupervised Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), OpenAI highlights in section 3.7 that the model was (very bad but) capable at translating French into English.  They were surprised because they deliberately removed non-English webpages from WebText in the dataset.  They only detected 10MB of data in the French language.
 
@@ -109,4 +113,35 @@ There's only one tenet I think is important for this: people are modeled by the 
 
 [^6]: Please check out [Marcus Hutter's](https://www.youtube.com/watch?v=7TgOwMW_rnk) work to explore this idea more.  Compression as prediction has been around forever, but Hutter is a leader who's obsessed with it.  I don't find myself following it beyond the major podcasts because there's only so much time.
 
+[^7]: In 2019, as today, many online speculators are entirely convinced that models just memorize information ([1](https://openmined.org/blog/scrambling-memorized-info-in-gpt-2) [2](https://thegradient.pub/gpt2-and-the-nature-of-intelligence) [3](https://slatestarcodex.com/2019/02/19/gpt-2-as-step-toward-general-intelligence/)).  But this hasn't been the prevailing view since Attention; it's actually quite hard to find peer-reviewed literature supporting memorization-forward models.  And to be clear, it is incredibly obvious that models <b>do</b> memorize information, explicitely shown in [^5], but that calling it memorization to imply any kind of lack of generalization or ability to restructure and use this information in creative and transferrable ways, is empirically wrong.  Here are papers from around Ilya's 2019 speech regarding memorization in transformers:  
+    - [Zhang, 2017](https://arxiv.org/pdf/1611.03530) finds that although models can [shatter](https://www.youtube.com/watch?v=Dc0sr0kdBVI) random training data, their equal performance on both train and test data implies something more nuanced.  But the next paper covers that this behavior is unique to random data:  
+    - [Arpit, 2017](https://arxiv.org/pdf/1706.05394) find that random data takes longer to learn than data with shared structure.  This demonstrates that DNN prioritize learning patterns before resorting to brute-force memorization; they exploit common structure and only later memorize specifics if forced.  
+    - [Keysers, 2019](https://openreview.net/forum?id=SygcCnNKwr) benchmark models' compositional generalization performance.  Given train/test datasets with similar distributions of vocabulary and grammar rules but different amounts of complex structure, they find Attention-based transformers prefer combinations explicitly encountered during training.  This is the strongest counter-example Ilya's confidence in deep generalization from next-token prediction, but my interpretation is that the model lacks an inductive bias for systematic recomposition; its success regime is rich statistical interpolation, not rote lookup.  
+    <table>
+      <thead>
+        <tr>
+          <th>Regime</th>
+          <th>What weights encode</th>
+          <th>Out-of-distribution failure mode</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Rote memorization</strong></td>
+          <td>Lookup-table of instances</td>
+          <td>Random performance on nearly everything</td>
+        </tr>
+        <tr>
+          <td><strong>Statistical interpolation</strong></td>
+          <td>Correlations and local heuristics</td>
+          <td>Fails on novel compositions</td>
+        </tr>
+        <tr>
+          <td><strong>Compositional generalization</strong></td>
+          <td>Algorithmic circuits</td>
+          <td>Fails only on unlearned algorithms</td>
+        </tr>
+      </tbody>
+    </table>
 
+[^8]: In order to benchmark [XLNet](https://arxiv.org/pdf/1906.08237) and [BERT](https://arxiv.org/pdf/1906.08237), each result comes from a model finetuned for that specific task.
