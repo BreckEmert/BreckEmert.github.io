@@ -23,3 +23,13 @@ hr {
   border: none;
   border-top: 1px solid #ccc;
 }
+
+/* Prevent superscripts from affecting line spacing */
+sup, sub {
+    vertical-align: baseline;
+    position: relative;
+    top: -0.4em;
+    font-size: 0.80em;
+    line-height: 0;
+}
+
