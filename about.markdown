@@ -16,6 +16,6 @@ Mid-2022: Discovered artificial intelligence and became deeply fascinated with t
 
 Spring 2023: Relocated back to Kansas to start at the University of Kansas to complete prerequisite classes for my master's.  Had a great time with the AI club there and finally was able to get some mentorship in AI.
 
-Fall 2023: Began master's program at the University of Kansas Medical Center, dedicating myself intensely to neuroscience and machine learning research.
+Fall 2023: Began master's program at the University of Kansas Medical Center, dedicating myself to neuroscience and machine learning research.
 
 November 2024: Secured a position as an advanced Research Analyst at the Wisconsin Department of Corrections, where I'm happy to be learning a lot about data science and machine learning.
