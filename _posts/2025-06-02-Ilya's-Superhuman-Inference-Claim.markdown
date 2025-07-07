@@ -119,7 +119,7 @@ Whether or not you accept Ilya's escalated claim, the empirical trend is there. 
 
 [^3]: [Emergent Misalignment](https://arxiv.org/pdf/2502.17424) shows that models finetuned to secretly output insecure code becomes a murderous nazi.  This is mentioned in [another Dwarkesh podcast](https://youtu.be/64lXQP6cs5M?t=2396) if you want a good listen.
 
-[^4]: The reality is that Attention is almost as unassuming/minimalist as MLP blocks.  Whereas a token's update depends only on its own previous state in an MLP, a self-attention block allows tokens to read a weighted combination of others' value projections.  This gives the model two modes of making an output, controlling what information is getting passed forward and how that information gets processed.  They're just enough structure for scalable computation.
+[^4]: The reality is that Attention is almost as unassuming/minimalist as MLP blocks.  Whereas a token's update depends only on its own previous state in an MLP, a self-attention block allows tokens to read a weighted combination of others' value projections.  This gives the model two modes of making an output, controlling what information is getting passed forward and how that information gets processed.  The point is they're just enough structure for scalable computation.
 
 [^5]:  Physics of Language Models  
     [Part 1](https://arxiv.org/pdf/2309.14316#page=7).  Linked to Result 1 - mixed training is required for knowledge extraction.  

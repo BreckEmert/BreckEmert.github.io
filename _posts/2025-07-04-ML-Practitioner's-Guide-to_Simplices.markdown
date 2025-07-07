@@ -16,7 +16,7 @@ I'm super excited to cover this because I've written down several off-the-noggin
 </div>
 
 #### Simplicial SMOTE
-I'm going to start my explanation of by explaining SMOTE, a synthetic data generation technique used with data imbalance.  If you have 1,000 regular emails but only 500 spam emails, neural architectures will fail because the gradient signal from the minority class is smaller and noisier.  The decision boundary is moved away from the rarer class and the model overfits to the majority.  Resampling techniques like RUS and SMOTE are designed to balance the number of classes.  With SMOTE, we generate random points (red) between neighboring minority class points (black), pulling the decision boundary towards the minority class and away from the majority class (blue cross):
+Let's start with SMOTE, a synthetic data generation technique used with data imbalance.  If you have 1,000 regular emails but only 500 spam emails, neural architectures will fail because the gradient signal from the minority class is smaller and noisier.  The decision boundary is moved away from the rarer class and the model overfits to the majority.  Resampling techniques like RUS and SMOTE are designed to balance the number of classes.  With SMOTE, we generate random points (red) between neighboring minority class points (black), pulling the decision boundary towards the minority class and away from the majority class (blue cross):
 
 <div style="text-align: center;">
     <img src="{{ 'assets/images/basic_smote.jpg' | relative_url }}" alt="basic_smote" style="max-width: 50%; height: auto;" />
@@ -37,10 +37,24 @@ Clearly this is not the best we can do.[^2]  Misclassifications happen at the su
 Let's look at the classic attention visualization under the lens of simplices.  Indices on the left are the points $Q_i$, indices on the right are the points $K_j$, and the edge you can think of as a pipe whose thickness is the scalar dot product $QK^T$. The information that actually gets to flow along that edge is then $S_{ij} = \operatorname{softmax}\bigl(Q_i^{\top}K_j / \sqrt{d}\bigr)$.
 
 <div style="text-align: center;">
-    <img src="{{ 'assets/images/classic_attn.jpg' | relative_url }}" alt="classic_attn" style="max-width: 50%; height: auto;" />
+    <video autoplay loop muted controls style="max-width: 80%; height: auto;">
+        <source src="{{ 'assets/videos/attention_flow.mp4' | relative_url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 </div>
 
+<br>
+
 Now - let's step this up by one dimension.  Instead of $KQ$ operations, what would happen if we did $KKQ$?.  Why would we want to do that?  Some facts are ternary, requiring three arguments.  They can't just be found with one $KQ$ interaction.  Take $\text{"The bakery is between the school and the library"}$.  In order to have the embedding for $\text{library}$ be explicitely "a bakery which is between a school and a library", we need three keys to interact.  You might say that regular Attention does this, which is true, but only naively through a summation.  In this new method, the keys are element-wise multiplied with each other.  Their aligned directions blow up, and signs flip.  Where $KQ$ Attention might normally have to interact with positive and negative covariance, a lot of its interaction here will be all positive.  You get a clearer signal specifically on these three-entity-operations.
+
+<div style="text-align: center;">
+    <video autoplay loop muted controls style="max-width: 80%; height: auto;">
+        <source src="{{ 'assets/videos/simplex_attn_flow_merged.mp4' | relative_url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+<br>
 
 Let's lay out what the three indices of this simplex are.  Inside of each head we have:
 - $i$: query vector (1d vector we get after multiplying a token's hidden state with the query weights)
