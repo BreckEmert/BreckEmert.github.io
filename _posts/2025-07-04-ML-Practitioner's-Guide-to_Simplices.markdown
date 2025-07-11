@@ -55,11 +55,15 @@ You might say that regular Attention does this, which is true, but can only do s
 
 <br>
 
+[Here](https://arxiv.org/pdf/2507.02754) is the paper by Meta, titled "Fast and Simplex: 2-Simplicial Attention in Triton".
+
+<br>
+
 ### 3-Results and notes
 Meta found that on the GSM8k dataset using simplex Attention gives a 2% lower NLL at 3.5B active parameters.  NLL stands for negative log-likelihood, which is a nice metric because it increases even when the model's top prediction was incorrect.  In this case this is about the same performance increase as adding 30% more parameters to the model, which is a good improvement.  They also report an 18% steeper scaling exponent than vanilla heads.
 
 Some implementation notes:
-- Each triple-head attends to up to 512 keys behind the query, and for each of those keys $j$, up to 32 tokens immediately behind $j$.  So at position 800 the model is considering pairs $(j, k)$ with $j \in [288, 800]$ and $k \in [j-31, j]$.  This is for a good balance of performance and context.
+- Each triple-head attends to up to 512 keys behind the query, and for each of those keys $j$, up to 32 tokens immediately in front of $j$.  So at position 800 the model is considering pairs $(j, k)$ with $j \in [288, 800]$ and $k \in [j, j+32]$.  This is for a good balance of performance and context.
 - We'll only replace every few dot-product heads with one of our triple-heads.  Both here and in regular Attention we have $n$ heads that we concatenate and apply an output projection to, to get them back to the residual stream's dimension.
 - Builds on FlashAttention-v3 and keeps its speed by splitting the softmax into tiles that fit inside SRAM (the overall softmax is still the same).
 
