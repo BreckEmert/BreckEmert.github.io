@@ -28,7 +28,7 @@ But today I found [him saying this exact idea](https://youtu.be/T0I88NhR_9M?t=51
 
 ---
 
-In that talk there was never a clear conclusion to the claim; he completely stumbles at the end and leaves the formal grounding unmentioned.  GPT-2 had been released just a month earlier (Feb 2019), demonstrating that Attention was sufficiently expressive—such that scaling it led to emergent behavior like summarization and translation without task-specific finetuning (note GPT-1 also had Attention but was only twice the size of my last personal NLP project at 117M).[^2]  Nonetheless, the theoretical explanation for why prediction by itself was yielding understanding was missing.
+In that talk there was never a clear conclusion to the claim; he completely stumbles at the end and leaves the formal grounding unmentioned.  GPT-2 had been released just a month earlier (Feb 2019), demonstrating that Attention was sufficiently expressive such that scaling it led to emergent behavior like summarization and translation without task-specific finetuning (note GPT-1 also had Attention but was only twice the size of my last personal NLP project at 117M).[^2]  Nonetheless, the theoretical explanation for why prediction by itself was yielding understanding was missing.
 
 His arguments are only intuitive and not rigorous, but two premises stand out.  The first is that <em>text is mostly self-contained.</em>  Predicting tokens accurately demands learning the semantic and logical structure of the text.  The next is that <em>making use of the data is making use of the world.</em>  More things are related than we think and here Ilya is now seeing this in the training data.[^3]  These ideas seem intuitive but hard to find any actual ground for.
 
@@ -56,7 +56,7 @@ Enter [scaling laws](https://arxiv.org/pdf/2001.08361).  Even though this talk w
 
 ---
 
-By 2023, the landscape had shifted entirely because of RL.  GPT-3 and GPT-4 continued along their scaling power-law trajectories, hitting benchmarks shown below.  Concurrently, a modern report on scaling laws, Physics of Language Models, covers that information "memorized" by the model is fully extractable and manipulable, though not in all ways.[^5]  This switched us from statistical memorization to semantic generalization.  ChatGPT's benchmarks manifest what Ilya claimed in 2019, where he said many times in the presentation about how important scaling was, and that more needed to be done.
+By 2023, the landscape had shifted, entirely because of RL.  GPT-3 and GPT-4 continued along their scaling power-law trajectories, hitting benchmarks shown below.  Concurrently, a modern report on scaling laws, Physics of Language Models, covers that information "memorized" by the model is fully extractable and manipulable, though not in all ways.[^5]  This switched us from statistical memorization to semantic generalization.  ChatGPT's benchmarks manifest what Ilya claimed in 2019, where he said many times in the presentation about how important scaling was, and that more needed to be done.
 
 <table>
   <thead>

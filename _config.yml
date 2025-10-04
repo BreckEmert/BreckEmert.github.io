@@ -22,16 +22,19 @@ title: ML Blog
 author: Breck Emert
 email: breckemert@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Notes and documentation on my work in ML.
+  Projects, notes and documentation on my work in ML.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://breckemert.github.io/"
 reddit_username: Breck_Emert
-github_username:  BreckEmert
+github_username: BreckEmert
 
 # Build settings
 theme: minima
 plugins:
   - jekyll-feed
+header_pages:
+  - about.markdown
+  - projects/index.md
 
 # Exclude from processing.
 # The following items will not be processed, by default.

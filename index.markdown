@@ -4,3 +4,9 @@
 
 layout: home
 ---
+<h2 class="post-list-heading">Projects</h2>
+<ul class="post-list">
+  <li>
+    <h3><a class="post-link" href="https://breckemert.github.io/Splendor-Webapp/"> Play my Splendor web app!</a></h3>
+  </li>
+</ul>
